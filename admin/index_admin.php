@@ -58,27 +58,15 @@ if(!isset($_SESSION["login"])) {
     <div class="container">
         <div class="row">
             <div class="col-lg-12 text-center">
-                <h1 class="mt-5">Selamat Datang Di Halaman Administrator</h1>
+                <h1 class="mt-5">Selamat Datang Di Halaman Admin Berita</h1>
                 <div class="container">
                     <div class="row">
                         <!-- navbar -->
                         <div class="col-sm">
-                            <a class="nav-link text-dark" href="./">Home</a>
+                            <a class="nav-link text-dark" href="index_admin.php">Home</a>
                         </div>
                         <div class="col-sm">
-                            <a class="nav-link text-dark" href="?mod=kategori">Kategori</a>
-                        </div>
-                        <div class="col-sm">
-                            <a class="nav-link text-dark" href="?mod=berita">Berita</a>
-                        </div>
-                        <div class="col-sm">
-                            <a class="nav-link text-dark" href="?mod=komentar">Komentar</a>
-                        </div>
-                        <div class="col-sm">
-                            <a class="nav-link text-dark" href="?mod=konfigurasi">Konfigurasi</a>
-                        </div>
-                        <div class="col-sm">
-                            <a class="nav-link text-dark" href="?mod=useradmin">User Admin</a>
+                            <a class="nav-link text-dark" href="?mod=berita_admin">Berita</a>
                         </div>
                         <div class="col-sm">
                             <a class="nav-link text-dark" href="logout.php">Log Out</a>
@@ -97,14 +85,8 @@ if(!isset($_SESSION["login"])) {
               case 'kategori':
                 include("kategori.php");
                 break;
-              case 'berita':
-                include("berita.php");
-                break;
-                case 'komentar':
-                include("komentar.php");
-                break;
-                case 'edit_komentar':
-                include("edit_komentar.php");
+              case 'berita_admin':
+                include("berita_admin.php");
                 break;
     					default:
     						echo "Selamat Datang " . $_SESSION ['nama']. " ";

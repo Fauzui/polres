@@ -11,7 +11,7 @@ if (isset($_POST['addberita'])) {
 	date_default_timezone_set("Asia/Jakarta");
 	$date = date("Y-m-d H:i:s");
 	$updateby = $_SESSION['nama'];
-	$terbit = $_POST['terbit'];
+	// $terbit = $_POST['terbit'];
 
 
 
@@ -65,60 +65,6 @@ if (isset($_POST['addberita'])) {
 	
 
 }
-
-if(isset($_GET['act']) && $_GET['act'] == 'edit') {
-
-	$id = $_GET['id'];
-	$sql = "SELECT * FROM berita WHERE ID = '$id'";
-	$result = mysqli_query($connect, $sql);
-	$row = mysqli_fetch_assoc($result);
-	$judul = $row['judul'];
-	$kategori = $row['kategori'];
-	$isi = $row['isi'];
-	$gambar = $row['gambar'];
-	$teks = $row['teks'];
-	$tanggal = $row['tanggal'];
-	$updateby = $row['updateby'];
-	$terbit = $row['terbit'];
-
-
-}
-
-if (isset($_POST['editberita'])) {
-	
-	$id = $_POST['id'];
-	$judul = $_POST['judul'];
-	$kategori = $_POST['kategori'];
-	$isi = $_POST['isi'];
-	$teks = $_POST['teks'];
-	$tanggal = date("Y-m-d H:i:s");
-	$terbit = $_POST['terbit'];
-
-	$sql = "UPDATE berita SET judul = '$judul', kategori = '$kategori', isi = '$isi', teks = '$teks', tanggal = '$tanggal', terbit = '$terbit' WHERE ID = '$id' ";
-
-	$result = mysqli_query($connect, $sql);
-
-	echo "<script> 
-			document.location.href = './?mod=berita';
-		  </script>";
-
-}
-
-// hapus berita
-
-if (isset($_GET['act']) && $_GET['act'] =='hapus') {
-	$id = $_GET['id'];
-	$sqlGambar = mysqli_query($connect, "SELECT * FROM berita WHERE ID= '$id'");
-	$result = mysqli_fetch_assoc($sqlGambar);
-	$gambar = $result['gambar'];
-	unlink('../'.$gambar);
-	$query = "DELETE FROM berita WHERE ID = '$id'";
-	$sql = mysqli_query($connect,$query);
-	echo "<script> 
-			document.location.href = './?mod=berita';
-		  </script>";
-}
-
 
  ?>
 
@@ -183,55 +129,10 @@ if (isset($_GET['act']) && $_GET['act'] =='hapus') {
             <textarea class="form-control" name="teks"
                 rows="3"><?php if (isset($_GET['act']) && $_GET['act'] =='edit') { echo $teks; } ?></textarea>
             <br>
-            <label>Terbitkan</label>
-            <br>
-            <select class="custom-select col-2" name="terbit">
-                <option value="1"
-                    <?php if(isset($_GET['act']) && $_GET['act'] =='edit' && $terbit == 1) { echo "selected"; } ?>>Yes
-                </option>
-                <option value="0"
-                    <?php if(isset($_GET['act']) && $_GET['act'] =='edit' && $terbit == 0) { echo "selected"; } ?>>No
-                </option>
-            </select>
-            <br>
             <br>
             <button type="submit" class="btn btn-primary" name="<?=(isset($id) ? 'editberita' : 'addberita'); ?>">
                 <?=(isset($id) ? 'Edit' : 'Tambah'); ?></button>
         </div>
     </fieldset>
 </form>
-
-<fieldset class="border p-2">
-    <legend class="w-auto text-left">List Berita</legend>
-    <table class="table">
-        <thead>
-            <tr>
-                <th scope="col">No</th>
-                <th scope="col">Judul</th>
-                <th scope="col">Kategori</th>
-                <th scope="col">Tanggal</th>
-                <th scope="col">Aksi</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php 
-		  			$no = 1;
-		  			$sql = "SELECT * FROM berita ORDER BY ID DESC";
-		  			$result = mysqli_query($connect, $sql);
-		  		 ?>
-            <?php while ($row = mysqli_fetch_assoc($result)) : ?>
-            <tr>
-                <td><?= $no; ?></td>
-                <td><?= $row['judul']; ?></td>
-                <td><?= $row['kategori']; ?></td>
-                <td><?= $row['tanggal']; ?></td>
-                <td>
-                    <a href="./?mod=berita&act=edit&id=<?= $row['ID']; ?>">Edit</a> |
-                    <a href="./?mod=berita&act=hapus&id=<?= $row['ID']; ?>">Hapus</a>
-                </td>
-            </tr>
-            <?php $no++; ?>
-            <?php endwhile; ?>
-        </tbody>
-    </table>
 </fieldset>
