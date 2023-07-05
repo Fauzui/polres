@@ -29,12 +29,20 @@ if (isset($_POST['submit'])) {
 		// cek password
 		$row = mysqli_fetch_assoc($result);
 		if (password_verify($password, $row["password"]) AND $row["username"] === $username) {
-			// set session
+            if ($row["role"] === "1"){
+                // set session
 			$_SESSION["login"] = true;
 			$_SESSION["nama"] = $row["Nama"];
 			header("Location: index.php");
 			exit;
-		}
+		}else{
+            $_SESSION["login"] = true;
+			$_SESSION["nama"] = $row["Nama"];
+			header("Location: index_admin.php");
+			exit;
+        }
+            }
+			
 	} else {
     echo "<script> 
           alert('Username Dan Password Salah');
